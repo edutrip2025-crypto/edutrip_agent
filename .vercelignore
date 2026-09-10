@@ -1,0 +1,11 @@
+.git
+.next
+node_modules
+.env*
+data
+*.xlsx
+db
+docs
+tests
+*.log
+*.tsbuildinfo
