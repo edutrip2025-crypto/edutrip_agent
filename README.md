@@ -34,7 +34,7 @@ Create a new Vercel project for this repository. Never link this folder to the e
 - Framework: Next.js. Install: `npm ci`. Build: `npm run build`. Node: 24.
 - Set all production variables from `.env.example`.
 - Set `APP_URL` to the permanent HTTPS production URL. Use at least 32 random characters each for `CRON_SECRET` and `UNSUBSCRIBE_SECRET`.
-- `vercel.json` invokes `/api/cron` every 15 minutes. This frequency requires a compatible paid Vercel plan. Hobby cron is not sufficient. Alternatively, use one authenticated external scheduler at the same frequency and remove Vercel's cron entry. Never use both schedulers intentionally.
+- The current Vercel project is on Hobby, so `vercel.json` deliberately has no cron. Hobby rejected the required 15-minute schedule. Use Vercel Pro with `*/15 * * * *`, or one authenticated external scheduler that calls `/api/cron` every 15 minutes. Never enable two schedulers.
 - A deployed preview remains a demo until Supabase is connected. Only the production deployment should ever receive `SEND_ENABLED=true`.
 - Test Titan sending to your own controlled address and reply through the configured alias before enabling real leads. Verify SPF/DKIM/DMARC using the received headers.
 - Use Check replies and confirm the sync time updates. After all checks, set `SEND_ENABLED=true` and enable sending in Sequence.
@@ -79,4 +79,3 @@ npm test
 Tests exercise a real embedded Postgres engine (PGlite), sequence boundaries, deduplication, replies during a reserved send, late replies, caps, SMTP ambiguity and role privileges. Titan credentials, real Supabase Auth/RLS, DNS and production cron must also be tested after deployment configuration; they cannot be verified offline.
 
 See [Deliverability strategy](docs/DELIVERABILITY.md) and [Operations](docs/OPERATIONS.md).
-
