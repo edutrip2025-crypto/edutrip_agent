@@ -2,8 +2,8 @@
 -- Every table is private to the server. Browser users never receive service-role credentials.
 create table public.settings (
  id integer primary key check(id=1), sending_enabled boolean not null default false,
- daily_limit integer not null default 10 check(daily_limit between 1 and 50),
- min_gap_minutes integer not null default 15 check(min_gap_minutes between 15 and 240),
+ daily_limit integer not null default 5 check(daily_limit between 1 and 50),
+ min_gap_minutes integer not null default 30 check(min_gap_minutes between 15 and 240),
  templates_approved boolean not null default false, sender_name text not null default 'Edutrip team',
  postal_address text not null default '', templates jsonb not null default '[]',
  last_sync_at timestamptz, last_run_at timestamptz, last_error text,
@@ -93,7 +93,7 @@ begin
  select * into s from settings where id=1 for update;
  if s.lease_owner is distinct from p_owner or s.lease_until<now() or not s.sending_enabled or not s.templates_approved or s.postal_address='' then return null;end if;
  if s.last_sync_at is null or s.last_sync_at<now()-interval '2 minutes' then return null;end if;
- if extract(isodow from localnow)>5 or extract(hour from localnow)<9 or extract(hour from localnow)>=17 then return null;end if;
+ if extract(isodow from localnow)>5 or extract(hour from localnow)<10 or extract(hour from localnow)>=16 then return null;end if;
  if s.last_attempt_at>now()-make_interval(mins=>s.min_gap_minutes) then return null;end if;
  select count(*) into used from outbound where state in ('reserved','sending','accepted','uncertain') and created_at>=date_trunc('day',localnow) at time zone 'Asia/Kolkata';
  if used>=s.daily_limit then return null;end if;

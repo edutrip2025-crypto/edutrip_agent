@@ -1,0 +1,26 @@
+name: Edutrip outreach worker
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: edutrip-outreach-worker
+  cancel-in-progress: false
+
+jobs:
+  run-worker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Poll replies and process at most one due email
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          WORKER_URL: https://edutrip-agent.vercel.app/api/cron
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "CRON_SECRET is not configured; worker remains paused."
+            exit 0
+          fi
+          curl --fail --silent --show-error --retry 2 --max-time 320 \
+            -H "Authorization: Bearer $CRON_SECRET" "$WORKER_URL"

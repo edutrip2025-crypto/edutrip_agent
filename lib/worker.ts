@@ -1,8 +1,9 @@
-import {randomUUID} from "node:crypto";import {db,rpc,result} from "./db";import {syncReplies,transport} from "./mail";import {renderTemplate,normalizeEmail} from "./policy";import {unsubscribeURL} from "./unsubscribe";
+import {randomUUID} from "node:crypto";import {db,rpc,result} from "./db";import {syncReplies,transport} from "./mail";import {renderTemplate,normalizeEmail,sendingWindow} from "./policy";import {unsubscribeURL} from "./unsubscribe";
 export async function runWorker(syncOnly=false){const owner=randomUUID();if(!await rpc("ea_lease",{p_owner:owner}))return {status:"busy"};let failure:string|null=null,messageId:string|null=null;
 try{const synced=await syncReplies();if(!synced.complete)return {status:"sync_backlog",...synced};
 await rpc("ea_housekeeping");
 if(syncOnly||process.env.SEND_ENABLED!=="true")return {status:"sync_only",...synced};
+if(!sendingWindow(new Date()))return {status:"outside_sending_window",...synced};
 const s=await result(db().from("settings").select("*").eq("id",1).single());
 if(!s.sending_enabled||!s.templates_approved)return {status:"paused"};
 if(!Array.isArray(s.templates)||s.templates.length!==4)throw Error("Four approved sequence templates are required");

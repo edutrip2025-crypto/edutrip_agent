@@ -11,7 +11,7 @@ Confirm the outreach is permitted by Titan and applicable rules. Titan's policy 
 Choose a real sender name, monitored From/Reply-To addresses and business postal address. Keep an abuse contact monitored. Use a dedicated outreach mailbox so its inbox can be reviewed without mixing personal correspondence.
 
 ## Volume and relevance
-Start at 10 total messages per weekday, spaced at least 15 minutes apart. This is an operational starting point, not an inbox guarantee. Count follow-ups in the same budget. Review results before increasing to 15–20; never increase automatically just because a few days passed. The interface's maximum of 50 is a guardrail, not a recommended target or a substitute for Titan account limits.
+Start at 5 total messages per weekday, spaced at least 30 minutes apart between 10 am and 4 pm IST. This is an operational starting point, not an inbox guarantee. Count follow-ups in the same budget. After at least five healthy sending days, increase manually to 8 and then 10 only if there are no complaints and the hard-bounce rate stays below 2%. Never increase automatically just because time passed. The interface's maximum of 50 is a guardrail, not a recommended target or a substitute for Titan account limits.
 
 Contact one relevant school role, not multiple staff at the same school simultaneously. Review campus/location and offer relevance. Prefer simple text, an honest subject, a small and specific request, and a real signature. The drafts ask whether the recipient handles school partnerships and offer a plan outline. Prices are not invented.
 

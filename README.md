@@ -34,17 +34,19 @@ Create a new Vercel project for this repository. Never link this folder to the e
 - Framework: Next.js. Install: `npm ci`. Build: `npm run build`. Node: 24.
 - Set all production variables from `.env.example`.
 - Set `APP_URL` to the permanent HTTPS production URL. Use at least 32 random characters each for `CRON_SECRET` and `UNSUBSCRIBE_SECRET`.
-- The current Vercel project is on Hobby, so `vercel.json` deliberately has no cron. Hobby rejected the required 15-minute schedule. Use Vercel Pro with `*/15 * * * *`, or one authenticated external scheduler that calls `/api/cron` every 15 minutes. Never enable two schedulers.
+- The current Vercel project is on Hobby, so `vercel.json` deliberately has no cron. The included GitHub Actions workflow calls `/api/cron` every 15 minutes after repository secret `CRON_SECRET` is configured. Never enable a second scheduler.
 - A deployed preview remains a demo until Supabase is connected. Only the production deployment should ever receive `SEND_ENABLED=true`.
 - Test Titan sending to your own controlled address and reply through the configured alias before enabling real leads. Verify SPF/DKIM/DMARC using the received headers.
 - Use Check replies and confirm the sync time updates. After all checks, set `SEND_ENABLED=true` and enable sending in Sequence.
 
 Vercel cron authorization uses `Authorization: Bearer <CRON_SECRET>`. Unauthenticated cron requests return 401. Vercel preview URLs should keep `SEND_ENABLED=false`. A function instance sends at most one email and is capped at 300 seconds.
 
+The scheduler polls Titan even outside sending hours so replies can stop future messages. Supabase Realtime is not a mailbox listener; the dashboard refreshes its private server API every 30 seconds.
+
 ## Sequence and dashboard semantics
 - One introduction, then at most three follow-ups.
-- At least 72 hours after the prior SMTP acceptance. Weekday 9 am–5 pm IST sending window can extend the interval.
-- Initial cap: 10 total emails/day, including follow-ups. Minimum gap: 15 minutes. Eligible follow-ups are prioritized.
+- At least 72 hours after the prior SMTP acceptance. Weekday 10 am–4 pm IST sending window can extend the interval.
+- Initial cap: 5 total emails/day, including follow-ups. Minimum gap: 30 minutes. Eligible follow-ups are prioritized.
 - After the fourth email, wait 72 hours; write off only after a successful reply scan. No fifth email is scheduled.
 - Any matched reply, including an automatic response, stops the sequence. A late reply moves a written-off lead to Replied. Reply manually in Titan.
 - Emails sent counts SMTP-accepted messages; this is **not** proof of inbox delivery.

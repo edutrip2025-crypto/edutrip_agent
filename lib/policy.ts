@@ -3,7 +3,7 @@ export const HOURS_72=72*60*60*1000;
 export function normalizeEmail(value:string){const e=value.trim().toLowerCase();if(e.length>254||! /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\.[a-z]{2,63}$/.test(e)||e.includes(".."))throw Error("Invalid email address");return e;}
 export function clientKey(city:string,school:string){const clean=(v:string)=>v.normalize("NFKC").toLowerCase().replace(/[^\p{L}\p{N}]/gu,"");return createHash("sha256").update(clean(city)+"|"+clean(school)).digest("hex");}
 export function nextDue(sentAt:Date){return new Date(sentAt.getTime()+HOURS_72);}
-export function sendingWindow(now:Date){const d=new Date(now.getTime()+330*60000);return d.getUTCDay()>0&&d.getUTCDay()<6&&d.getUTCHours()>=9&&d.getUTCHours()<17;}
+export function sendingWindow(now:Date){const d=new Date(now.getTime()+330*60000);return d.getUTCDay()>0&&d.getUTCDay()<6&&d.getUTCHours()>=10&&d.getUTCHours()<16;}
 export function canSend(l:{status:string;eligible:boolean;sent_count:number;next_send_at:string|null},now:Date){return l.eligible&&["new","following_up"].includes(l.status)&&l.sent_count<4&&!!l.next_send_at&&new Date(l.next_send_at)<=now;}
 export function renderTemplate(text:string,lead:{school:string;city:string},sender:string){return text.replaceAll("{{school}}",lead.school).replaceAll("{{city}}",lead.city).replaceAll("{{sender}}",sender);}
 export const templates=[
