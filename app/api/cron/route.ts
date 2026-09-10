@@ -1,0 +1,3 @@
+import {runWorker} from "@/lib/worker";import {timingSafeEqual} from "node:crypto";export const runtime="nodejs";export const maxDuration=300;export const dynamic="force-dynamic";
+export async function GET(req:Request){const secret=process.env.CRON_SECRET;const h=req.headers.get("authorization")||"";const expected="Bearer "+secret;if(!secret||secret.length<32||h.length!==expected.length||!timingSafeEqual(Buffer.from(h),Buffer.from(expected)))return Response.json({error:"Unauthorized"},{status:401});try{return Response.json(await runWorker());}catch{return Response.json({error:"Worker paused. Check the dashboard and server logs."},{status:503});}}
+

@@ -1,0 +1,33 @@
+{
+  "name": "edutrip-agent",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts"
+  },
+  "dependencies": {
+    "next": "16.3.4",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "@supabase/supabase-js": "2.116.0",
+    "nodemailer": "10.0.3",
+    "imapflow": "2.0.2",
+    "mailparser": "3.9.24",
+    "jszip": "3.10.2",
+    "fast-xml-parser": "5.11.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.0",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "@types/nodemailer": "7.0.3",
+    "@types/mailparser": "3.4.6",
+    "typescript": "5.9.3",
+    "tsx": "4.20.6",
+    "@electric-sql/pglite": "0.5.8"
+  }
+}

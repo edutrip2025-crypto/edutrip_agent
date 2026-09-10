@@ -1,0 +1,6 @@
+import {templates} from "./policy";import type {Dashboard,Lead} from "./model";
+export function demo():Dashboard {const cities=["Pune","Hyderabad","Chennai","Kochi","Jaipur","Ahmedabad","Patna"];const names=["Maple Grove School","Riverdale Academy","Horizon Public School","Westfield School","Greenwood Academy","Oakwood Public School","Sunrise Academy"];
+const leads:Lead[]=Array.from({length:21},(_,i)=>({id:"demo-"+i,school:names[i%7]+(i>6?" "+(Math.floor(i/7)+1):""),city:cities[i%7],locality:"Illustrative campus",email:"school"+i+"@example.com",phone:"",source_url:"",status:i<5?"new":i<14?"following_up":i<18?"replied":i<20?"written_off":"unsubscribed",eligible:i>=5&&i<14,permission_note:"Demo only",sent_count:i<5?0:i<14?2:4,next_send_at:new Date(Date.now()+i*3600000).toISOString(),last_sent_at:null,replied_at:i>=14&&i<18?new Date().toISOString():null,created_at:new Date().toISOString()}));
+return {demo:true,leads,messages:[],replies:[],imports:[],settings:{id:1,sending_enabled:false,daily_limit:10,min_gap_minutes:15,templates_approved:false,sender_name:"Edutrip team",postal_address:"",templates,last_sync_at:null,last_run_at:null,last_error:null},stats:{leads:21,sent:46,replies:4,replied:4,following_up:9,written_off:2,review:5,suppressed:1,sent_today:0},setup:{database:false,mail:false,live:false}};
+}
+

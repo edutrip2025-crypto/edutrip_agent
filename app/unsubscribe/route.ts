@@ -1,0 +1,6 @@
+import {validToken} from "@/lib/unsubscribe";import {rpc} from "@/lib/db";
+export const dynamic="force-dynamic";
+function args(req:Request){const u=new URL(req.url),id=u.searchParams.get("id")||"",t=u.searchParams.get("token")||"";if(!validToken(id,t))throw Error("Invalid link");return id;}
+export async function GET(req:Request){try{args(req);return new Response('<!doctype html><html><head><meta name="robots" content="noindex"><title>Unsubscribe from Edutrip</title></head><body style="font:18px system-ui;max-width:600px;margin:80px auto;padding:20px"><h1>Stop Edutrip outreach</h1><p>Confirm below and we will stop this email sequence.</p><form method="post"><button style="padding:14px 24px">Unsubscribe</button></form></body></html>',{headers:{"Content-Type":"text/html; charset=utf-8","Cache-Control":"no-store"}});}catch{return new Response("Invalid unsubscribe link",{status:400});}}
+export async function POST(req:Request){try{await rpc("ea_suppress",{p_lead:args(req),p_status:"unsubscribed"});return new Response("You are unsubscribed. No further automated outreach will be sent.",{headers:{"Cache-Control":"no-store"}});}catch{return new Response("Unable to unsubscribe. Reply STOP to the email and the team will handle it.",{status:400});}}
+
