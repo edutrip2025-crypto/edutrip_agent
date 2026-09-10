@@ -26,6 +26,8 @@ Typical non-EU hosts are `smtp.titan.email:465` (TLS) and `imap.titan.email:993`
 
 Use a dedicated outreach sender mailbox. Set `TITAN_REPLY_TO` to an alias you have actually provisioned and forward it into `TITAN_REPLY_USER`. The application does not assume catch-all or plus-addressing support. Reply-To aliases are not separate IMAP accounts; authenticate the destination mailbox.
 
+For this deployment, send from `founders@edutripindia.com`, use `schools@edutripindia.com` as Reply-To, authenticate IMAP as `founders@edutripindia.com`, and monitor `INBOX` plus `Agent email replies`.
+
 Set the exact folder names in `TITAN_REPLY_FOLDERS` and `TITAN_SENDER_FOLDERS`, including any Junk/Spam or filtered folders. The sender mailbox is also checked for bounces/direct replies if it differs from the reply mailbox. Keep the configured folders intact.
 
 ## Separate Vercel deployment

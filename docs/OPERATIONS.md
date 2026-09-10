@@ -6,7 +6,7 @@ Upload the updated Excel. Review the import summary: new, existing, rejected. Re
 ## Daily
 Check replies in Titan, then inspect the dashboard. Confirm the last worker and successful inbox-sync times are recent (within approximately 30 minutes on the 15-minute schedule). Investigate any error, bounce or complaint before resuming. Review unmatched replies and mark the corresponding school Replied when appropriate. The dashboard refreshes every 30 seconds.
 
-`TITAN_REPLY_FOLDERS` should include both `INBOX` and the exact Titan folder name `agent email replies`. Titan is monitored through IMAP; Supabase Realtime only broadcasts database changes and is not required for mailbox monitoring.
+`TITAN_REPLY_FOLDERS` should include both `INBOX` and the exact Titan folder name `Agent email replies`. Titan is monitored through IMAP; Supabase Realtime only broadcasts database changes and is not required for mailbox monitoring.
 
 The worker does not write personalized replies or negotiate pricing. Once a school responds, you take over.
 
@@ -35,4 +35,3 @@ Do not shorten production follow-up intervals for testing. Automated tests cover
 
 ## Remote setup pending
 The user will create the separate Supabase project. Production SMTP/IMAP credentials and alias routing must be supplied through environment variables. No school email has been sent as part of implementation.
-
